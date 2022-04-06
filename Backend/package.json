@@ -7,7 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "truffle test --network test"
+    "test": "truffle test --network test",
+    "ganache-test": "ganache -p 7546 -m \"space fringe wool wrestle harvest dentist trip avocado marriage output imitate wire\"",
+    "ganache-dev": "ganache -p 7545 -m \"brush fatal enter art step helmet kit theory neglect argue pair coast\""
   },
   "author": "",
   "license": "ISC"
