@@ -7,5 +7,8 @@ const SimpleContract = artifacts.require('UniBucProf');
  
 module.exports = function(deployer) {
   // Use deployer to state migration tasks.
-  deployer.deploy(SimpleContract);
+  deployer.deploy(SimpleContract, "https://idk", 1)
+  .then(() => {
+    console.log("Deployed contract at " + SimpleContract.address);
+  });
 };

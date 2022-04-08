@@ -26,13 +26,13 @@ export default function ShowSingleNFT({ nft, goBackToNFTList }: ShowSingleNFTPar
         <Button onClick={goBackToNFTList}>Go Back</Button> 
         <Card
             style={CARD_STYLE}
-            interactive={true}
+            interactive={false}
             elevation={Elevation.TWO}
-            onClick={buyNFT} key={nft.tokenId}
         >
             <img src={nft.url} height="50px" width="50px" />
             <h5><a href="#">Card heading</a></h5>
             <p>Price: {nft.price} TK</p>
+            <p>Name: {nft.description}</p>
             <Button onClick={buyNFT}>Buy NFT</Button>
         </Card>
     </div>

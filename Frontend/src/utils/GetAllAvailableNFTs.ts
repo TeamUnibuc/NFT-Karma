@@ -1,19 +1,27 @@
 import { NFT } from "."
+import { contract } from "./SmartContractConnector"
+
+const GetSingleNFT = async (tokenId: number): Promise<NFT> => {
+    const data = await contract.methods.tokenData(tokenId).call();
+    const nft: NFT = {
+        url: data.url,
+        price: data.price,
+        description: data.name,
+        ownerWallet: "UNKNOWN",
+        tokenId: tokenId
+    }
+
+    return nft;
+}
 
 export const GetAllAvailableNFTs = async (): Promise<NFT[]> => {
-    // TODO
-    return [
-        {
-            url: "https://imgs.search.brave.com/OsLroFwufyIbCtchLJIkOIXKWh29t-kBcQ87WybdXZQ/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9pMC53/cC5jb20vd2FsbHBh/cGVyc2hlcm8uY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy9zaXRl/cy8xMy8yMDE0LzEx/L0NhdC1TYWQtQW5u/b3llZC5qcGc_Zml0/PTI1NjAlMkMxNjAw/JnNzbD0x",
-            ownerWallet: "haha",
-            price: 10,
-            tokenId: 1,
-        },
-        {
-            url: "https://imgs.search.brave.com/OsLroFwufyIbCtchLJIkOIXKWh29t-kBcQ87WybdXZQ/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9pMC53/cC5jb20vd2FsbHBh/cGVyc2hlcm8uY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy9zaXRl/cy8xMy8yMDE0LzEx/L0NhdC1TYWQtQW5u/b3llZC5qcGc_Zml0/PTI1NjAlMkMxNjAw/JnNzbD0x",
-            ownerWallet: "haha",
-            price: 10,
-            tokenId: 2,
-        }
-    ]
+    const nrOfTokens = await contract.methods.getTotalSupply().call();
+    console.log("We have " + nrOfTokens + " tokens.")
+
+    const tokensIds = Array.from(Array(nrOfTokens).keys()).slice(0, nrOfTokens)
+    console.log("Tokens to get: ", tokensIds)
+
+    const nfts = await Promise.all(tokensIds.map(GetSingleNFT))
+
+    return nfts;
 }

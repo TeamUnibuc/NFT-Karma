@@ -3,6 +3,7 @@ export type NFT = {
     ownerWallet: string,
     price: number,
     tokenId: number,
+    description: string,
 }
 
 import { BuyNFT } from "./BuyNFT";
