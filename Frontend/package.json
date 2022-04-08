@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@blueprintjs/core": "^4.1.2",
     "@metamask/providers": "^8.1.1",
     "agent-base": "^6.0.2",
     "browserify-zlib": "^0.2.0",
