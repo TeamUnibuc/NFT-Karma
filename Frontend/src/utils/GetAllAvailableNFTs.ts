@@ -18,7 +18,11 @@ export const GetAllAvailableNFTs = async (): Promise<NFT[]> => {
     const nrOfTokens = await contract.methods.getTotalSupply().call();
     console.log("We have " + nrOfTokens + " tokens.")
 
-    const tokensIds = Array.from(Array(nrOfTokens).keys()).slice(0, nrOfTokens)
+    let tokensIds = []
+    for (let i = 0; i < nrOfTokens; i++)
+        tokensIds.push(i)
+    // const tokensIds = Array.from(Array(nrOfTokens).keys()).slice(0, nrOfTokens)
+
     console.log("Tokens to get: ", tokensIds)
 
     const nfts = await Promise.all(tokensIds.map(GetSingleNFT))

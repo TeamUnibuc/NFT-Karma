@@ -36,8 +36,8 @@ contract UniBucProf {
 
   function mint(string calldata tokenURI, string calldata name) public 
   {
-    if (msg.sender != _contractOwner)
-      revert();
+    // if (msg.sender != _contractOwner)
+    //   revert();
     if (msg.sender == address(0))
       revert();
     

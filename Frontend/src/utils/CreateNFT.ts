@@ -6,7 +6,17 @@ import { contract, web3 } from "./SmartContractConnector"
 export const CreateNFT = async (NFTUrl: string, description: string): Promise<boolean> => {
     const accounts = await web3.eth.getAccounts();
     console.log("Accounts: ", accounts)
-    const result = await contract.methods.mint(NFTUrl, description).send({ from: accounts[0] });
+    const result = await contract.methods.mint(NFTUrl, description).send({
+        from: accounts[0],
+        tokenURI: NFTUrl,
+        name: description,
+    })
+    .then(() => {
+        console.log("Yep")
+    })
+    .catch(() => {
+        console.log("Nope")
+    });
     console.log("Received " + result)
     return false;
 }
