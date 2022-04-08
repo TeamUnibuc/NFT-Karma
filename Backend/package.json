@@ -9,7 +9,7 @@
   "scripts": {
     "test": "truffle test --network test",
     "ganache-test": "ganache -p 7546 --networkId=5778 -m \"space fringe wool wrestle harvest dentist trip avocado marriage output imitate wire\"",
-    "ganache-dev": "ganache -p 7545 --networkId=5777 -m \"brush fatal enter art step helmet kit theory neglect argue pair coast\""
+    "ganache-dev": "ganache -p 7545 --networkId=5777 --gasPrice 100000 --gasLimit=0x1fffffffffffff -m \"brush fatal enter art step helmet kit theory neglect argue pair coast\""
   },
   "author": "",
   "license": "ISC",
