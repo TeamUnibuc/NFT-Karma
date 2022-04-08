@@ -1,29 +1,44 @@
-import { useState } from 'react'
-import logo from './logo.svg'
+import React, { useState, useCallback } from 'react'
 import './App.css'
-import Metamask from './components/Metamask'
 import SmartContractCaller from './components/SmartContractCaller'
+import {
+  Alignment,
+  Button,
+  Navbar,
+} from "@blueprintjs/core";
+import NFTList from './components/NFTList';
+import UploadNFT from './components/UploadNFT';
+
+const CONTENT_STYLE: React.CSSProperties = {
+  paddingLeft: "30px",
+  paddingTop: "30px",
+  paddingRight: "30px",
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  // list of active menus
+  const [activeMenu, setActiveMenu] = useState("NFT-LIST")
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <Navbar>
+          <Navbar.Group align={Alignment.LEFT}>
+              <Navbar.Heading>NFT Karma</Navbar.Heading>
+              <Navbar.Divider />
+              <Button className="bp4-minimal" icon="home" text="Home" onClick={() => setActiveMenu("NFT-LIST")} />
+              <Button className="bp4-minimal" icon="add" text="Upload NFT" onClick={() => setActiveMenu("UPLOAD-NFT")} />
+          </Navbar.Group>
+      </Navbar>
 
-        <Metamask />
-        <SmartContractCaller />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-      </header>
+      <div style={CONTENT_STYLE}>
+      {activeMenu == "NFT-LIST" && <NFTList />}
+      {activeMenu == "UPLOAD-NFT" && <UploadNFT />}
+      {/* <header className="App-header"> */}
+        {/* <Metamask /> */}
+      {/* <SmartContractCaller /> */}
+      {/* </header> */}
+      </div>
     </div>
   )
 }
