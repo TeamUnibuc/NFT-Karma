@@ -14,11 +14,10 @@ contract UniBucProf {
     string url;
     uint256 price;
     string name;
+    address owner;
   }
 
   mapping (uint256 => STokenData) private _tokenData;
-
-  mapping (uint256 => address) private _ownerOfTokenId;
 
   uint256 private totalSupply;
 
@@ -46,7 +45,7 @@ contract UniBucProf {
     _tokenData[newTokenId].url = tokenURI;
     _tokenData[newTokenId].price = _startPrice;
     _tokenData[newTokenId].name = name;
-    _ownerOfTokenId[newTokenId] = msg.sender;
+    _tokenData[newTokenId].owner = msg.sender;
 
     totalSupply += 1;
   }
@@ -70,13 +69,13 @@ contract UniBucProf {
       revert();
     if (msg.sender == address(0))
       revert();
-    if (msg.sender == _ownerOfTokenId[tokenId])
+    if (msg.sender == _tokenData[tokenId].owner)
       revert();
     if (msg.value < _tokenData[tokenId].price)
       revert();
 
     _tokenData[tokenId].price *= 2;
-    _ownerOfTokenId[tokenId] = msg.sender;
+    _tokenData[tokenId].owner = msg.sender;
   }
 }
 
