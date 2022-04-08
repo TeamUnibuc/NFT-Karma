@@ -5,7 +5,7 @@ pragma solidity >=0.4.22 <0.9.0;
 contract UniBucProf {
   
   uint256 private _startPrice;
-  address private _contractOwner;
+  address payable private _contractOwner;
   string private _baseURI;
   string constant public collectionName = "Numai Profi Unibuc";
 
@@ -13,11 +13,10 @@ contract UniBucProf {
   {
     string url;
     uint256 price;
+    string name;
   }
 
-  mapping (uint256 => string) private _tokenURI;
-
-  mapping (uint256 => uint256) private _tokenPrice;
+  mapping (uint256 => STokenData) private _tokenData;
 
   mapping (uint256 => address) private _ownerOfTokenId;
 
@@ -25,13 +24,18 @@ contract UniBucProf {
 
   constructor (string memory __baseURI, uint256 _initPrice)
   { 
-    _contractOwner = msg.sender;
+    _contractOwner = payable(msg.sender);
     _baseURI = __baseURI;
     _startPrice = _initPrice;
     totalSupply = 0;
   }
 
-  function mint(string calldata tokenURI) public 
+  function getTotalSupply() public view returns(uint256)
+  {
+    return totalSupply;
+  }
+
+  function mint(string calldata tokenURI, string calldata name) public 
   {
     if (msg.sender != _contractOwner)
       revert();
@@ -39,8 +43,9 @@ contract UniBucProf {
       revert();
     
     uint256 newTokenId = totalSupply;
-    _tokenURI[newTokenId] = tokenURI;
-    _tokenPrice[newTokenId] = _startPrice;
+    _tokenData[newTokenId].url = tokenURI;
+    _tokenData[newTokenId].price = _startPrice;
+    _tokenData[newTokenId].name = name;
     _ownerOfTokenId[newTokenId] = msg.sender;
 
     totalSupply += 1;
@@ -51,10 +56,27 @@ contract UniBucProf {
     if (tokenId >= totalSupply || tokenId < 0)
       revert();
 
-    return STokenData(
-      string(abi.encodePacked(_baseURI, _tokenURI[tokenId])),
-      _tokenPrice[tokenId]
-    );
+    return _tokenData[tokenId];
+  }
+
+  function checkBalance() public view returns (uint256)
+  {
+    return address(this).balance;
+  }
+
+  function buyToken(uint256 tokenId) public payable
+  {
+    if (tokenId < 0 || tokenId >= totalSupply)
+      revert();
+    if (msg.sender == address(0))
+      revert();
+    if (msg.sender == _ownerOfTokenId[tokenId])
+      revert();
+    if (msg.value < _tokenData[tokenId].price)
+      revert();
+
+    _tokenData[tokenId].price *= 2;
+    _ownerOfTokenId[tokenId] = msg.sender;
   }
 }
 
