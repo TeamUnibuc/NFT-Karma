@@ -7,7 +7,24 @@ In order to run the project, you need to have installed truffle and ganache
 npm install -g truffle
 npm install -g ganache
 ```
-If you want to use metamask, it's recomended to use metamask
+If you want to use metamask, it's recomended to use metamask.
+
+Then:
+1. Start ganache:
+```sh
+    cd Backend
+    npm run ganache-dev
+```
+
+2. Deploy the contract:
+```sh
+    cd Backend
+    truffle deploy
+```
+
+3. If you want to update the contract, then:
+    * Redeploy the contract: `truffle migrate --reset`.
+    * Copy the new deployed contract address (from the stdout of `truffe`) to `Frontend/src/utils/SmartContractConnector.ts`.
 
 ## Example run
 
@@ -29,3 +46,4 @@ If you want to use metamask, it's recomended to use metamask
 [Exemplu frontend](https://stackoverflow.com/questions/53190441/javascript-web3js-frontend)
 
 [Other tutorial](https://medium.com/swlh/develop-test-and-deploy-your-first-ethereum-smart-contract-with-truffle-14e8956d69fc)
+

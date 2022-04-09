@@ -25,7 +25,7 @@ contract UniBucProf {
   { 
     _contractOwner = payable(msg.sender);
     _baseURI = __baseURI;
-    _startPrice = 1 ether;//_initPrice ether;
+    _startPrice = _initPrice * 1000000000000000000;
     totalSupply = 0;
   }
 
@@ -66,7 +66,7 @@ contract UniBucProf {
   function buyToken(uint256 tokenId) public payable
   {
     require(tokenId >= 0 && tokenId < totalSupply, "Token is not valid!");
-    require(msg.sender == address(0), "Can't use address 0");
+    require(msg.sender != address(0), "Can't use address 0");
     require(msg.sender != _tokenData[tokenId].owner, "Can't buy your own NFT!");
     require(msg.value == _tokenData[tokenId].price, "Value of transaction not equal to price");
 
