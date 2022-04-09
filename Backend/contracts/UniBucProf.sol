@@ -42,7 +42,7 @@ contract UniBucProf {
       revert();
     
     uint256 newTokenId = totalSupply;
-    _tokenData[newTokenId].url = tokenURI;
+    _tokenData[newTokenId].url = string(abi.encodePacked(_baseURI, tokenURI));
     _tokenData[newTokenId].price = _startPrice;
     _tokenData[newTokenId].name = name;
     _tokenData[newTokenId].owner = msg.sender;
