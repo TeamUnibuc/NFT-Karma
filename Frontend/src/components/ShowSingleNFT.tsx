@@ -17,7 +17,7 @@ export default function ShowSingleNFT({ nft, goBackToNFTList }: ShowSingleNFTPar
 {
 
     const buyNFT = async () => {
-        await BuyNFT(nft.tokenId);
+        await BuyNFT(nft);
         console.log("Got here!")
         goBackToNFTList();
     }
@@ -33,6 +33,7 @@ export default function ShowSingleNFT({ nft, goBackToNFTList }: ShowSingleNFTPar
             <h5><a href="#">Card heading</a></h5>
             <p>Price: {nft.price} TK</p>
             <p>Name: {nft.description}</p>
+            <p>Owner: {nft.ownerWallet}</p>
             <Button onClick={buyNFT}>Buy NFT</Button>
         </Card>
     </div>

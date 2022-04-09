@@ -1,12 +1,13 @@
+import { NFT } from ".";
 import { contract, web3 } from "./SmartContractConnector";
 
 // true if we were able to buy it
-export const BuyNFT = async (tokenId: number): Promise<boolean> => {
+export const BuyNFT = async (nft: NFT): Promise<boolean> => {
     const accounts = await web3.eth.getAccounts();
     console.log("Accounts: ", accounts)
-    const result = await contract.methods.buyToken(tokenId).send({
+    const result = await contract.methods.buyToken(nft.tokenId).send({
         from: accounts[0],
-        value: 100,
+        value: nft.price,
         gas: 3000000,
     })
     .then(() => {

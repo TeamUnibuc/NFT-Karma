@@ -7,7 +7,7 @@ const GetSingleNFT = async (tokenId: number): Promise<NFT> => {
         url: data.url,
         price: data.price,
         description: data.name,
-        ownerWallet: "UNKNOWN",
+        ownerWallet: data.owner,
         tokenId: tokenId
     }
 
