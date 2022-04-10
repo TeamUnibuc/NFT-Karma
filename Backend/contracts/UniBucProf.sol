@@ -36,12 +36,6 @@ contract UniBucProf {
 
   function mint(string calldata tokenURI, string calldata name) public 
   {
-    // if (msg.sender != _contractOwner)
-    //   revert();
-    // if (msg.sender == address(0))
-    //   revert();
-    require(msg.sender == _contractOwner, "Only owner can mint");
-
     uint256 newTokenId = totalSupply;
     _tokenData[newTokenId].url = string(abi.encodePacked(_baseURI, tokenURI));
     _tokenData[newTokenId].price = _startPrice;
