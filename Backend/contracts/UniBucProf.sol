@@ -36,11 +36,6 @@ contract UniBucProf {
 
   function mint(string calldata tokenURI, string calldata name) public 
   {
-    // if (msg.sender != _contractOwner)
-    //   revert();
-    if (msg.sender == address(0))
-      revert();
-    
     uint256 newTokenId = totalSupply;
     _tokenData[newTokenId].url = string(abi.encodePacked(_baseURI, tokenURI));
     _tokenData[newTokenId].price = _startPrice;
@@ -68,7 +63,7 @@ contract UniBucProf {
     require(tokenId >= 0 && tokenId < totalSupply, "Token is not valid!");
     require(msg.sender != address(0), "Can't use address 0");
     require(msg.sender != _tokenData[tokenId].owner, "Can't buy your own NFT!");
-    require(msg.value == _tokenData[tokenId].price, "Value of transaction not equal to price");
+    require(msg.value >= _tokenData[tokenId].price, "Value of transaction smaller than price");
 
     payable(_tokenData[tokenId].owner).transfer(_tokenData[tokenId].price);
     
